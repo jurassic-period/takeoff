@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import LoginForm from './components/loginForm';
+import Office from './components/office';
 const axios = require('axios');
 
 const URL = 'http://localhost:3001/';
 
 export default class App extends Component {
 
+  state = {
+    authorized: false,
+    loginError: false,
+  }
+
   login = async(email, password) => {
     try {
-      const response = await axios({
+      await axios({
         method: 'post',
         url: `${URL}login`,
         data: {
@@ -17,21 +23,25 @@ export default class App extends Component {
           "password": password
         }
       });
-      console.log('response', response);
+      this.setState({ authorized: true });
     }
-    catch(e) {
-      console.log('e', e);
+    catch {
+      this.setState({ loginError: true });
+      setTimeout(() => this.setState({ loginError: false }), 2500);
     }
   }
 
   render() {
+    const { authorized, loginError } = this.state;
     return (
       <div className="App container">
         <Router>
-          {/* <div style={{border: "1px solid green"}} onClick={this.onclick2}>HERE login</div> */}
-          <Route path="/">
+          <Route path="/" exact>
+            {loginError? <div className="row justify-content-center log-err">Вы ввели неверные данные, попробуйте ещё раз</div> : null}
             <LoginForm login={this.login}/>
           </Route>
+          <Route path="/office" component={Office}/>
+          {authorized? <Redirect to="/office" /> : null}
         </Router>
       </div>
     );
