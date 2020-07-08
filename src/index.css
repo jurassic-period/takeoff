@@ -23,3 +23,42 @@ code {
   border-radius: 10px;
   margin: 15px 200px 0 200px;
 }
+
+.office {
+  border: 3px solid #007bff;
+  border-radius: 15px;
+  margin-top: 20px;
+  padding: 40px;
+}
+
+.office__title {
+  margin-bottom: 25px;
+  border-left: 1px solid green;
+  border-right: 1px solid green;
+}
+
+.office__card {
+  margin-bottom: 30px;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding: 5px 10px;
+}
+
+.close {
+  margin-top: -70px;
+  color: #dc3545;
+  font-size: 1.6rem;
+}
+
+.close:hover {
+  color: #c82333;;
+}
+
+.edit {
+  font-size: 11px;
+  padding: 1px 5px;
+}
+
+.edit__input {
+  width: 50rem;
+}

@@ -27,6 +27,7 @@ export default class LoginForm extends PureComponent {
         e.preventDefault();
         const { email, password } = this.state;
         const { login } = this.props;
+        if (email.length < 5 || password.length < 6) return;
         login(email, password);
         this.setState({ email: '', password: '' }, this.activetedButton);
     }
