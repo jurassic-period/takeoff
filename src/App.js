@@ -40,8 +40,8 @@ export default class App extends Component {
             {loginError? <div className="row justify-content-center log-err">Вы ввели неверные данные, попробуйте ещё раз</div> : null}
             <LoginForm login={this.login}/>
           </Route>
-          <Route path="/office" component={Office}/>
-          {authorized? <Redirect to="/office" /> : null}
+          {/* <Route path="/office" component={Office}/> */}
+          {authorized? <><Route path="/office" component={Office}/> <Redirect to="/office" /></> : null}
         </Router>
       </div>
     );
