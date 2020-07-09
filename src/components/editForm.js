@@ -1,11 +1,18 @@
 import React, { PureComponent } from 'react';
 
 export default class EditForm extends PureComponent {
+    static defaultProps = {
+        card: {
+            address: '',
+            phone: '',
+            email: '',
+        }
+      }
 
     state = {
         address: this.props.card.address,
-        tel: this.props.card.tel,
-        mail: this.props.card.mail,
+        phone: this.props.card.phone,
+        email: this.props.card.email,
     }
 
     onChange = ({ target }) => {
@@ -18,23 +25,22 @@ export default class EditForm extends PureComponent {
         getEditedCard({ ...this.state, id });
     }
 
+    makeInputs = () => {
+        const { state } = this;
+        const keys = Object.keys(state);
+        return keys.map((k) => (
+            <div className="form-group" key={k}>
+                <label>{k}</label>
+                <input type={k} name={k} value={state[k]} onChange={this.onChange} className="form-control edit__input" />
+            </div>
+        ));
+    }
+
     render() {
-        const { address, tel, mail } = this.state;
         return (
-            <form onSubmit={this.onSubmit(this.props.card.id)}>
-            <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Address</label>
-                <input type="address" name="address" value={address} onChange={this.onChange} className="form-control edit__input" />
-            </div>
-            <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Phone</label>
-                <input type="phone" name="tel" value={tel} onChange={this.onChange} className="form-control edit__input" />
-            </div>
-            <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Email</label>
-                <input type="email" name="mail" value={mail} onChange={this.onChange} className="form-control edit__input" />
-            </div>
-            <button type="submit" className="btn btn-primary">Edit</button>
+            <form onSubmit={this.onSubmit(this.props.id)}>
+                {this.makeInputs()}
+                <button type="submit" className="btn btn-primary">Принять изменения</button>
             </form>
         );
     }

@@ -62,3 +62,7 @@ code {
 .edit__input {
   width: 50rem;
 }
+
+.office__link {
+  margin-left: auto;
+}

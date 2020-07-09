@@ -1,34 +1,8 @@
 import React, { PureComponent } from 'react';
+import INITIAL_DATA from '../adresses-data';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import EditForm from './editForm';
-
-const INITIAL_DATA = [
-    {
-        address: "г. Москва, ул. Случайная, дом 4, стр. 2",
-        tel: '+7 495 111-11-11',
-        mail: 'random@gmail.com',
-    },
-    {
-        address: "г. Пенза, ул. Научная, дом 3, кв. 7",
-        tel: '+7 353 222-11-11',
-        mail: 'penza@gmail.com',
-    },
-    {
-        address: "г. Ялта, ул. Вишнёвая, 22/12",
-        tel: '+7 322 333-11-21',
-        mail: 'yalta@gmail.com',
-    },
-    {
-        address: "г. Благовещенск, ул. Ленина, дом 3, стр. 11",
-        tel: '+7 422 121-41-14',
-        mail: 'bgk@gmail.com',
-    },
-    {
-        address: "г. Воронеж, ул. Разбитая, дом 1, кв. 12",
-        tel: '+7 222 133-18-14',
-        mail: 'voronej@gmail.com',
-    },
-];
 
 const makeContactsWithUniqueId = () => INITIAL_DATA.map((el) => {
     const id = _.uniqueId();
@@ -41,6 +15,7 @@ export default class Office extends PureComponent {
         contacts: makeContactsWithUniqueId(),
         edit: false,
         editedCard: {},
+        addCard: false,
     }
 
     deliteCard = (id) => () => {
@@ -57,12 +32,15 @@ export default class Office extends PureComponent {
 
     getEditedCard = (card) => {
         const { contacts } = this.state;
+        let uniqueId = true;
         const mapped = contacts.map((c) => {
             if (c.id === card.id) {
+                uniqueId = false;
                 return card;
             }
             return c;
         });
+        if (uniqueId) return this.setState({ contacts: [...contacts, card], addCard: false });
         this.setState({ contacts: mapped, edit: false });
     } 
 
@@ -71,8 +49,8 @@ export default class Office extends PureComponent {
         return contacts.map((c) => (
             <div className="office__card col-12" key={c.id}>
                 <div>{c.address}</div>
-                <div>{c.tel}</div>
-                <div>{c.mail}</div>
+                <div>{c.phone}</div>
+                <div>{c.email}</div>
                 <button type="button" className="btn btn-primary edit" onClick={this.edit(c.id)}>Редактировать</button>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.deliteCard(c.id)}>
                     <span aria-hidden="true">&times;</span>
@@ -81,13 +59,20 @@ export default class Office extends PureComponent {
         ));
     }
 
+    addCard = () => {
+        this.setState({ addCard: true });
+    }
+
     render() {
-        const { edit, editedCard } = this.state;
+        const { edit, editedCard, addCard } = this.state;
+        if (edit) return <EditForm card={editedCard} getEditedCard={this.getEditedCard} />;
+        if (addCard) return <EditForm id={_.uniqueId()} getEditedCard={this.getEditedCard} />;
         return (
             <div className="row office">
-                {edit? <EditForm card={editedCard} getEditedCard={this.getEditedCard}/> : 
-                <><div className="col-12 office__title">Вы можете удалять, изменять или добавлять новые карточки с контактными данными</div>
-                {this.createContactsCards()}</>}
+                <div className="col-12 office__title">Вы можете удалять, изменять или добавлять новые карточки с контактными данными</div>
+                {this.createContactsCards()}
+                <button type="button" className="btn btn-primary" onClick={this.addCard}>Добавить карточку с адресом</button>
+                <Link to="/" className="office__link">Выйти из личного кабинета</Link>
             </div>
         )
     }
