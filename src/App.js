@@ -41,7 +41,7 @@ export default class App extends Component {
             <LoginForm login={this.login}/>
           </Route>
           {/* <Route path="/office" component={Office}/> */}
-          {authorized? <><Route path="/office" component={Office}/> <Redirect to="/office" /></> : null}
+          {authorized && <><Route path="/office" component={Office}/> <Redirect to="/office" /></>}
         </Router>
       </div>
     );
