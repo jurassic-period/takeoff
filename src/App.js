@@ -4,8 +4,6 @@ import LoginForm from './components/loginForm';
 import Office from './components/office';
 const axios = require('axios');
 
-
-
 const URL = 'http://localhost:3001/';
 
 export default class App extends Component {
@@ -49,7 +47,6 @@ export default class App extends Component {
     );
   }
 }
-
 
  // ____________________________________________________________________________________________________________________________
 

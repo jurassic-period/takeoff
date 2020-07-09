@@ -33,6 +33,7 @@ code {
 
 .office__title {
   margin-bottom: 25px;
+  margin-top: 20px;
   border-left: 1px solid green;
   border-right: 1px solid green;
 }
@@ -65,4 +66,8 @@ code {
 
 .office__link {
   margin-left: auto;
+}
+
+.search__input {
+  width: 20rem;
 }

@@ -38,7 +38,7 @@ export default class EditForm extends PureComponent {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit(this.props.id)}>
+            <form onSubmit={this.onSubmit(this.props.id || this.props.card.id)}>
                 {this.makeInputs()}
                 <button type="submit" className="btn btn-primary">Принять изменения</button>
             </form>

@@ -3,6 +3,7 @@ import INITIAL_DATA from '../adresses-data';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import EditForm from './editForm';
+import SearchInput from './searchInput';
 
 const makeContactsWithUniqueId = () => INITIAL_DATA.map((el) => {
     const id = _.uniqueId();
@@ -16,6 +17,7 @@ export default class Office extends PureComponent {
         edit: false,
         editedCard: {},
         addCard: false,
+        term: '',
     }
 
     deliteCard = (id) => () => {
@@ -44,9 +46,19 @@ export default class Office extends PureComponent {
         this.setState({ contacts: mapped, edit: false });
     } 
 
+    visibleCards = (contacts, term) => {
+        if (term.legth === 0) return contacts;
+        return contacts.filter((c) => {
+            const { address, phone, email  } = c;
+            const str = `${address}${phone}${email}`;
+            return str.toLowerCase().indexOf(term.toLowerCase()) > -1;
+        });
+    }
+
     createContactsCards = () => {
-        const { contacts } = this.state;
-        return contacts.map((c) => (
+        const { contacts, term } = this.state;
+        const filtered = this.visibleCards(contacts, term);
+        return filtered.map((c) => (
             <div className="office__card col-12" key={c.id}>
                 <div>{c.address}</div>
                 <div>{c.phone}</div>
@@ -63,12 +75,17 @@ export default class Office extends PureComponent {
         this.setState({ addCard: true });
     }
 
+    changeTerm = ({ target: {value} }) => {
+        this.setState({ term: value });
+    }
+
     render() {
         const { edit, editedCard, addCard } = this.state;
         if (edit) return <EditForm card={editedCard} getEditedCard={this.getEditedCard} />;
         if (addCard) return <EditForm id={_.uniqueId()} getEditedCard={this.getEditedCard} />;
         return (
             <div className="row office">
+                <SearchInput changeTerm={this.changeTerm} />
                 <div className="col-12 office__title">Вы можете удалять, изменять или добавлять новые карточки с контактными данными</div>
                 {this.createContactsCards()}
                 <button type="button" className="btn btn-primary" onClick={this.addCard}>Добавить карточку с адресом</button>
