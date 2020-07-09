@@ -71,3 +71,7 @@ code {
 .search__input {
   width: 20rem;
 }
+
+.cancel {
+  margin-left: 5px;
+}

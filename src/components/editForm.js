@@ -20,8 +20,10 @@ export default class EditForm extends PureComponent {
     }
 
     onSubmit = (id) => (e) => {
+        console.log(e.target.name)
         e.preventDefault();
         const { getEditedCard } = this.props;
+        if(Object.values(this.state).join().length < 10) return;
         getEditedCard({ ...this.state, id });
     }
 
@@ -41,6 +43,7 @@ export default class EditForm extends PureComponent {
             <form onSubmit={this.onSubmit(this.props.id || this.props.card.id)}>
                 {this.makeInputs()}
                 <button type="submit" className="btn btn-primary">Принять изменения</button>
+                <button type="button" className="btn btn-primary cancel" onClick={this.props.cancel}>Отмена</button>
             </form>
         );
     }

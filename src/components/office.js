@@ -71,18 +71,16 @@ export default class Office extends PureComponent {
         ));
     }
 
-    addCard = () => {
-        this.setState({ addCard: true });
-    }
+    addCard = () => this.setState({ addCard: true });
 
-    changeTerm = ({ target: {value} }) => {
-        this.setState({ term: value });
-    }
+    changeTerm = ({ target: {value} }) => this.setState({ term: value });
+
+    cancel = () => this.setState({ addCard: false });
 
     render() {
         const { edit, editedCard, addCard } = this.state;
         if (edit) return <EditForm card={editedCard} getEditedCard={this.getEditedCard} />;
-        if (addCard) return <EditForm id={_.uniqueId()} getEditedCard={this.getEditedCard} />;
+        if (addCard) return <EditForm id={_.uniqueId()} cancel={this.cancel} getEditedCard={this.getEditedCard} />;
         return (
             <div className="row office">
                 <SearchInput changeTerm={this.changeTerm} />
