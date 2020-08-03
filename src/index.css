@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -40,8 +40,8 @@ code {
 
 .office__card {
   margin-bottom: 30px;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: .25rem;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
   padding: 5px 10px;
 }
 
@@ -52,7 +52,7 @@ code {
 }
 
 .close:hover {
-  color: #c82333;;
+  color: #c82333;
 }
 
 .edit {

@@ -1,68 +1,75 @@
-import React, { PureComponent } from 'react';
-import cn from 'classnames';
+import React, { PureComponent } from "react";
+import cn from "classnames";
 
-const fields = ['email', 'password'];
+const fields = ["email", "password"];
 
 export default class LoginForm extends PureComponent {
-    state = {
-        email: '',
-        password: '',
-        button: true,
-    }
+  state = {
+    email: "",
+    password: "",
+    disabledButton: true,
+  };
 
-    activetedButton = () => {
-        const { email, password } = this.state
-        if (email.length > 4 && password.length > 5) {
-            this.setState({ button: false })
-        } else {
-            this.setState({ button: true })
-        }
+  activetedButton = () => {
+    const { email, password } = this.state;
+    if (email.length > 4 && password.length > 5) {
+      this.setState({ disabledButton: false });
+    } else {
+      this.setState({ disabledButton: true });
     }
+  };
 
-    handleChangeField = ({ target }) => {
-        this.setState({ [target.name]: target.value }, this.activetedButton);
-    }
+  handleChangeField = ({ target }) => {
+    this.setState({ [target.name]: target.value }, this.activetedButton);
+  };
 
-    handleSubmitForm = (e) => {
-        e.preventDefault();
-        const { email, password } = this.state;
-        const { login } = this.props;
-        if (email.length < 5 || password.length < 6) return;
-        login(email, password);
-        this.setState({ email: '', password: '' }, this.activetedButton);
-    }
+  handleSubmitForm = e => {
+    e.preventDefault();
+    const { email, password } = this.state;
+    const { login } = this.props;
+    if (email.length < 5 || password.length < 6) return;
+    login(email, password);
+    this.setState({ email: "", password: "" }, this.activetedButton);
+  };
 
-    buildForm = () => {
-        return fields.map((name) => (
-          <div className="form-group" key={name}>
-            <input
-              type={name}
-              name={name}
-              onChange={this.handleChangeField}
-              value={this.state[name]}
-              className="form-control"
-              placeholder={name}
-            />
-          </div>
-        ));
-    }
+  buildForm = () => {
+    return fields.map(name => (
+      <div className="form-group" key={name}>
+        <input
+          type={name}
+          name={name}
+          onChange={this.handleChangeField}
+          value={this.state[name]}
+          className="form-control"
+          placeholder={name}
+          required
+        />
+      </div>
+    ));
+  };
 
-    render() {
-        const classes = cn({
-            'btn': true,
-            'btn-primary': true,
-            'disabled': this.state.button,
-          });
-        return (
-            <div className="row justify-content-center">
-                <div>
-                    <p className="p-login">Чтобы попасть в личный кабинет введите данные:</p>
-                    <form className="login-form" onSubmit={this.handleSubmitForm}>
-                        {this.buildForm()}
-                        <button type="submit" className={classes}>Submit</button>
-                    </form>
-                </div>
-            </div>
-        )
-    }
+  render() {
+    const { disabledButton } = this.state;
+
+    const classes = cn({
+      btn: true,
+      "btn-secondary": disabledButton,
+      "btn-success": !disabledButton,
+    });
+    return (
+      <div className="row justify-content-center">
+        <div>
+          <p className="p-login">
+            Чтобы попасть в личный кабинет введите данные:
+          </p>
+          <form className="login-form" onSubmit={this.handleSubmitForm}>
+            {this.buildForm()}
+            <button type="submit" className={classes} disabled={disabledButton}>
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
