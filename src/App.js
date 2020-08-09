@@ -24,6 +24,7 @@ export default class App extends Component {
       });
       this.setState({ authorized: true });
     } catch {
+      console.log('catch error')
       this.setState({ loginError: true });
       setTimeout(() => this.setState({ loginError: false }), 2500);
     }
@@ -35,14 +36,13 @@ export default class App extends Component {
       <div className="App container">
         <Router>
           <Route path="/" exact>
-            {loginError ? (
+            {loginError && (
               <div className="row justify-content-center log-err">
                 Вы ввели неверные данные, попробуйте ещё раз
               </div>
-            ) : null}
+            )}
             <LoginForm login={this.login} />
           </Route>
-          {/* <Route path="/office" component={Office}/> */}
           {authorized && (
             <>
               <Route path="/office" component={Office} />{" "}

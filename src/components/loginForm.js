@@ -55,12 +55,13 @@ export default class LoginForm extends PureComponent {
       btn: true,
       "btn-secondary": disabledButton,
       "btn-success": !disabledButton,
+      "btn-login-form": true,
     });
     return (
       <div className="row justify-content-center">
         <div>
-          <p className="p-login">
-            Чтобы попасть в личный кабинет введите данные:
+          <p className="p-login text-center">
+            Авторизация:
           </p>
           <form className="login-form" onSubmit={this.handleSubmitForm}>
             {this.buildForm()}
